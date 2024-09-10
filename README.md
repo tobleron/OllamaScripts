@@ -1,5 +1,3 @@
-Here's an organized and straightforward explanation of what your PowerShell script `Ask_LLM_v15.ps1` does and why it is useful:
-
 ### Script Overview
 The script interacts with a local server for the Ollama AI, allowing users to send prompts to different AI models, receive responses, and save conversations in a structured format. It manages prompt input, model selection, interaction with the AI models, and storage of chat logs and results.
 
