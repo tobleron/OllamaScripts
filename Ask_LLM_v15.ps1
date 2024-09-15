@@ -231,10 +231,25 @@ if ($selectedModels.Count -eq 1)
     {
         $sanitizedModel = Sanitize-FileName -fileName $model
         $prompt = Get-Content $promptInputFile -Raw
+
+        #Start timer
+        $startTime = Get-Date
+
+        #Start processing.. 
         $responseText = Send-RequestToOllama -model $model -prompt $prompt         
         
+        #Calculate elapsed time
+        $endTime = Get-Date
+        $elapsedTime = $endTime - $startTime
+        
+        # Format elapsed time as minutes and seconds
+        $formattedTime = "{0:hh\:mm\:ss}" -f $elapsedTime
+
+        # Append elapsed time to the response
+        $responseTextWithTime = "$responseText`n`n Time taken to respond: $formattedTime"
+
         # Save responses and prompts
-        Save-MdFile "# $model`n`n$responseText" $tmpMdDir "${sanitizedModel}_$timestamp.md"
+        Save-MdFile "# $model`n`n$responseTextWithTime" $tmpMdDir "${sanitizedModel}_$timestamp.md"
         Save-MdFile $prompt $promptsDir "Prompt_$timestamp.md"
 
         # Display response
